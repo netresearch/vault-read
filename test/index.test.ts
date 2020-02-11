@@ -1,24 +1,19 @@
 import nock = require('nock');
 import cmd = require('../src');
-//@TODO add proper tests
-const address = "https://vault.test.tld";
-const username = "testuser";
-const password = "testpassword";
-const secretPath = "secretPath";
-const secretKey = "secretKey";
+// @TODO add proper tests
+const address = 'https://vault.test.tld';
+const username = 'testuser';
+const password = 'testpassword';
+const secretPath = 'secretPath';
+const secretKey = 'secretKey';
 describe('vault-read with arguments', () => {
-  let stdOut: string[], stdErr: string[];
+  let stdOut: string[];
 
   beforeEach(() => {
     stdOut = [];
-    stdErr = [];
     jest
       .spyOn(process.stdout, 'write')
-      .mockImplementation((val: string) => { stdOut.push(val); return true });
-    stdErr = [];
-    jest
-      .spyOn(process.stderr, 'write')
-      .mockImplementation((val: string) => { stdOut.push(val); return true });
+      .mockImplementation((val: string) => { stdOut.push(val); return true; });
   });
 
   afterEach(() => {
@@ -60,8 +55,8 @@ describe('vault-read with arguments', () => {
   });
 
   it('Fail for unauthorized', async () => {
-    let scope = nock(address)
-      .post('/v1/auth/ldap/login/' + username)
+    const scope = nock(address)
+      .post(`/v1/auth/ldap/login/${username}`)
       .reply(401);
 
     try {
@@ -73,35 +68,51 @@ describe('vault-read with arguments', () => {
   });
 
   it('Prints successful result with key', async () => {
-    let scope = nock(address)
-    .post('/v1/auth/ldap/login/' + username)
-    // user is logged in, return their name
-    .reply(200, { token: 'dasdae3wq412edasda' })
-    .get('/v1/' + secretPath)
-    .reply(200, { data: { secretKey: 'result' } });
-    
+    const scope = nock(address)
+      .post(`/v1/auth/ldap/login/${username}`)
+      // user is logged in, return their name
+      .reply(200, { token: 'dasdae3wq412edasda' })
+      .get(`/v1/${secretPath}`)
+      .reply(200, { data: { secretKey: 'result' } });
+
     try {
-      await cmd.run(['-u', username, '-p', password, '-a', address, secretPath, secretKey])
+      await cmd.run(['-u', username, '-p', password, '-a', address, secretPath, secretKey]);
     } catch (err) {
       fail(err);
     }
-    
+
     expect(scope.isDone()).toBeTruthy();
     expect(stdOut).toHaveLength(1);
     expect(stdOut[0]).not.toContain(secretKey);
     expect(stdOut[0]).toContain('result');
   });
-  
-  it('Prints successful result without key', async () => {
-    let scope = nock(address)
-      .post('/v1/auth/ldap/login/' + username)
+
+  it('Prints successful result with wrong key', async () => {
+    const scope = nock(address)
+      .post(`/v1/auth/ldap/login/${username}`)
       // user is logged in, return their name
       .reply(200, { token: 'dasdae3wq412edasda' })
-      .get('/v1/' + secretPath)
+      .get(`/v1/${secretPath}`)
       .reply(200, { data: { secretKey: 'result' } });
 
     try {
-      await cmd.run(['-u', username, '-p', password, '-a', address, secretPath])
+      await cmd.run(['-u', username, '-p', password, '-a', address, secretPath, 'wrongKey']);
+    } catch (err) {
+      expect(err.message).toContain("'wrongKey' is not available in result set.");
+      expect(scope.isDone()).toBeTruthy();
+    }
+  });
+
+  it('Prints successful result without key', async () => {
+    const scope = nock(address)
+      .post(`/v1/auth/ldap/login/${username}`)
+      // user is logged in, return their name
+      .reply(200, { token: 'dasdae3wq412edasda' })
+      .get(`/v1/${secretPath}`)
+      .reply(200, { data: { secretKey: 'result' } });
+
+    try {
+      await cmd.run(['-u', username, '-p', password, '-a', address, secretPath]);
     } catch (err) {
       fail(err);
     }

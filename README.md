@@ -6,7 +6,7 @@ Read and print secrets from Hashicorp Vault
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/vault-read.svg)](https://npmjs.org/package/vault-read)
 [![Downloads/week](https://img.shields.io/npm/dw/vault-read.svg)](https://npmjs.org/package/vault-read)
-[![License](https://img.shields.io/npm/l/vault-read.svg)](https://github.com/powli/vault-read/blob/master/package.json)
+[![License](https://img.shields.io/npm/l/vault-read.svg)](https://github.com/netresearch/vault-read/blob/master/package.json)
 
 <!-- toc -->
 * [Usage](#usage)
