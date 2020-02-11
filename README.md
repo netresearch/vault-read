@@ -16,14 +16,25 @@ Read and print secrets from Hashicorp Vault
 <!-- usage -->
 ```sh-session
 $ npm install -g vault-read
-$ vault-read COMMAND
-running command...
+$ vault-read [-u|--username Vault user] [-p|--password Vault password] [-a|--address Vault address] PATH [KEY]
 $ vault-read (-v|--version|version)
 vault-read/0.0.0 linux-x64 node-v10.16.3
-$ vault-read --help [COMMAND]
+$ vault-read --help
+Read secrets from the vault
+
 USAGE
-  $ vault-read COMMAND
-...
+  $ vault-read PATH [KEY]
+
+ARGUMENTS
+  PATH  Path from which to read the secret
+  KEY   Specific key from the data store in the path
+
+OPTIONS
+  -a, --address=address    The Vault url, alternatively provide CI_VAULT_ADDRESS env variable
+  -h, --help               show CLI help
+  -p, --password=password  The LDAP password for Vault, alternatively provide CI_VAULT_PASSORD env variable
+  -u, --username=username  The LDAP username for Vault, alternatively provide CI_VAULT_USER env variable
+  -v, --version            show CLI version
 ```
 <!-- usagestop -->
 # Commands

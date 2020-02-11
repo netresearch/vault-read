@@ -9,9 +9,15 @@ class VaultRead extends Command {
     // add --version flag to show CLI version
     version: Flag.version({ char: 'v' }),
     help: Flag.help({ char: 'h' }),
-    username: Flag.string({ char: 'u', description: 'ldap username to login' }),
-    password: Flag.string({ char: 'p', description: 'ldap password' }),
-    address: Flag.string({ char: 'a', description: 'vault address' }),
+    username: Flag.string(
+      { char: 'u', description: 'The LDAP username for Vault, alternatively provide CI_VAULT_USER env variable' },
+    ),
+    password: Flag.string(
+      { char: 'p', description: 'The LDAP password for Vault, alternatively provide CI_VAULT_PASSORD env variable' },
+    ),
+    address: Flag.string(
+      { char: 'a', description: 'The Vault url, alternatively provide CI_VAULT_ADDRESS env variable' },
+    ),
   };
 
   static args: Argument.IArg[] = [
