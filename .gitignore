@@ -1,0 +1,8 @@
+*-debug.log
+*-error.log
+/dist
+/lib
+/package-lock.json
+/tmp
+node_modules
+.idea/

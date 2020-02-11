@@ -1,0 +1,52 @@
+{
+  "name": "vault-read",
+  "description": "Read and print secrets from Hashicorp Vault",
+  "version": "0.0.0",
+  "author": "Paul Siedler @powli",
+  "bin": {
+    "vault-read": "./bin/run"
+  },
+  "bugs": "https://github.com/powli/vault-read/issues",
+  "dependencies": {
+    "@oclif/command": "^1",
+    "@oclif/config": "^1",
+    "@oclif/plugin-help": "^2",
+    "@types/node-vault": "^0.9.0",
+    "node-vault": "^0.9.12",
+    "tslib": "^1"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1",
+    "@types/jest": "^25.1.2",
+    "@types/nock": "^11.1.0",
+    "@types/node": "^10",
+    "jest": "^25.1.0",
+    "nock": "^11.8.2",
+    "ts-jest": "^25.2.0",
+    "ts-node": "^8",
+    "typescript": "^3.3"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/lib"
+  ],
+  "homepage": "https://github.com/powli/vault-read",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "oclif": {
+    "bin": "vault-read"
+  },
+  "repository": "powli/vault-read",
+  "scripts": {
+    "prepack": "rm -rf lib && tsc -b && oclif-dev readme",
+    "test": "jest",
+    "version": "oclif-dev readme && git add README.md"
+  },
+  "types": "lib/index.d.ts"
+}
