@@ -46,7 +46,7 @@ class VaultRead extends Command {
       );
     }
 
-    if (!(username && password)) {
+    if (!username || !password) {
       this.error(
         'Please provide username and password either as flags or via CI_VAULT_USER and CI_VAULT_PASSWORD environment variables.',
         { exit: 1 },
@@ -56,23 +56,26 @@ class VaultRead extends Command {
     const vault = NodeVault({
       endpoint: address as string,
     });
+
     try {
       await vault.ldapLogin({ username, password });
       const response = await vault.read(args.path);
-      this.parseSecret(response, args.key);
+      this.log(
+        VaultRead.parseSecret(response, args.key),
+      );
     } catch (error) {
       this.error(error, { exit: 1 });
     }
   }
 
-  private parseSecret(response: { data: { [p: string]: string } }, key: string): void {
+  private static parseSecret(response: { data: { [p: string]: string } }, key: string): string {
     if (key === '') {
-      this.log(JSON.stringify(response.data));
+      return JSON.stringify(response.data);
+    }
+    if (!response.data[key]) {
+      throw new Error(`Searched key '${key}' is not available in result set.`);
     } else {
-      if (!response.data[key]) {
-        this.error(`Searched key '${key}' is not available in result set.`, { exit: 1 });
-      }
-      this.log(response.data[key] as string);
+      return (response.data[key] as string);
     }
   }
 }
