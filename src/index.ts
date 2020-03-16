@@ -13,7 +13,7 @@ class VaultRead extends Command {
       { char: 'u', description: 'The LDAP username for Vault, alternatively provide CI_VAULT_USER env variable' },
     ),
     password: Flag.string(
-      { char: 'p', description: 'The LDAP password for Vault, alternatively provide CI_VAULT_PASSORD env variable' },
+      { char: 'p', description: 'The LDAP password for Vault, alternatively provide CI_VAULT_PASSWORD env variable' },
     ),
     address: Flag.string(
       { char: 'a', description: 'The Vault url, alternatively provide CI_VAULT_ADDRESS env variable' },
