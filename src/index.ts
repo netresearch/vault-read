@@ -58,7 +58,7 @@ class VaultRead extends Command {
     });
 
     try {
-      await vault.ldapLogin({ username, password });
+      await vault.userpassLogin({ username, password });
       const response = await vault.read(args.path);
       this.log(
         VaultRead.parseSecret(response, args.key),
