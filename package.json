@@ -1,7 +1,7 @@
 {
   "name": "@netresearch/vault-read",
   "description": "Read and print secrets from Hashicorp Vault",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": "Paul Siedler <paul.siedler@netresearch.de>",
   "bin": {
     "vault-read": "./bin/run"
