@@ -12,14 +12,12 @@
     "@oclif/config": "^1",
     "@oclif/parser": "^3.8.5",
     "@oclif/plugin-help": "^3",
-    "@types/node-vault": "^0.9.1",
-    "node-vault": "0.9.21",
+    "node-vault": "netresearch/node-vault#master",
     "tslib": "^2"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1",
     "@types/jest": "^26.0.22",
-    "@types/nock": "^11.1.0",
     "@types/node": "^14",
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
