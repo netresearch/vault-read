@@ -58,13 +58,13 @@ class VaultRead extends Command {
     });
 
     try {
-      await vault.userpassLogin({ username, password });
+      await vault.ldapLogin({ username, password });
       const response = await vault.read(args.path);
       this.log(
         VaultRead.parseSecret(response, args.key),
       );
-    } catch (error) {
-      this.error(error, { exit: 1 });
+    } catch (err) {
+      this.error((err as Error), { exit: 1 });
     }
   }
 

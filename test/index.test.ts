@@ -13,7 +13,7 @@ describe('vault-read with arguments', () => {
     stdOut = [];
     jest
       .spyOn(process.stdout, 'write')
-      .mockImplementation((val: string) => { stdOut.push(val); return true; });
+      .mockImplementation((val) => { stdOut.push(val as string); return true; });
   });
 
   afterEach(() => {
@@ -26,7 +26,7 @@ describe('vault-read with arguments', () => {
     try {
       await cmd.run([secretPath]);
     } catch (err) {
-      expect(err.message).toContain('CI_VAULT_ADDRESS');
+      expect((err as Error).message).toContain('CI_VAULT_ADDRESS');
     }
   });
 
@@ -34,7 +34,7 @@ describe('vault-read with arguments', () => {
     try {
       await cmd.run([secretPath, '-a', address]);
     } catch (err) {
-      expect(err.message).toMatch(/.*CI_VAULT_USER.*/);
+      expect((err as Error).message).toMatch(/.*CI_VAULT_USER.*/);
     }
   });
 
@@ -42,7 +42,7 @@ describe('vault-read with arguments', () => {
     try {
       await cmd.run([secretPath, '-a', address, '-p', password]);
     } catch (err) {
-      expect(err.message).toMatch(/.*CI_VAULT_USER.*/);
+      expect((err as Error).message).toMatch(/.*CI_VAULT_USER.*/);
     }
   });
 
@@ -50,7 +50,7 @@ describe('vault-read with arguments', () => {
     try {
       await cmd.run([secretPath, '-a', address, '-u', username]);
     } catch (err) {
-      expect(err.message).toMatch(/.*CI_VAULT_USER.*/);
+      expect((err as Error).message).toMatch(/.*CI_VAULT_USER.*/);
     }
   });
 
@@ -62,7 +62,7 @@ describe('vault-read with arguments', () => {
     try {
       await cmd.run(['-u', username, '-p', password, '-a', address, secretPath, secretKey]);
     } catch (err) {
-      expect(err.message).toMatch(/.*Status 401.*/);
+      expect((err as Error).message).toMatch(/.*401 \(Unauthorized\).*/);
       expect(scope.isDone()).toBeTruthy();
     }
   });
@@ -98,7 +98,7 @@ describe('vault-read with arguments', () => {
     try {
       await cmd.run(['-u', username, '-p', password, '-a', address, secretPath, 'wrongKey']);
     } catch (err) {
-      expect(err.message).toContain("'wrongKey' is not available in result set.");
+      expect((err as Error).message).toContain("'wrongKey' is not available in result set.");
       expect(scope.isDone()).toBeTruthy();
     }
   });
