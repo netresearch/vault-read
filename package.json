@@ -50,7 +50,8 @@
   "repository": "netresearch/vault-read",
   "scripts": {
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "build:lib": "tsc"
   },
   "types": "lib/index.d.ts"
 }
