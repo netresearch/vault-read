@@ -9,7 +9,7 @@
   "bugs": "https://github.com/netresearch/vault-read/issues",
   "dependencies": {
     "@oclif/command": "^1",
-    "@oclif/config": "^1",
+    "@oclif/config": "^1.17.1",
     "@oclif/parser": "^3.8.5",
     "@oclif/plugin-help": "^3",
     "node-vault": "netresearch/node-vault#master",
