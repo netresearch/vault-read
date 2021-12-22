@@ -8,28 +8,28 @@
   },
   "bugs": "https://github.com/netresearch/vault-read/issues",
   "dependencies": {
-    "@oclif/command": "^1",
-    "@oclif/config": "^1",
-    "@oclif/parser": "^3.8.5",
+    "@oclif/command": "^1.8.16",
+    "@oclif/config": "^1.18.2",
+    "@oclif/parser": "^3.8.6",
     "@oclif/plugin-help": "^3.2.7",
     "node-vault": "netresearch/node-vault#master",
-    "tslib": "^2"
+    "tslib": "^2.3.1"
   },
   "devDependencies": {
-    "@oclif/dev-cli": "^1",
-    "@types/jest": "^26.0.22",
-    "@types/node": "^14",
-    "@typescript-eslint/eslint-plugin": "^4.20.0",
-    "@typescript-eslint/parser": "^4.20.0",
-    "eslint": "^7.23.0",
+    "@oclif/dev-cli": "^1.26.10",
+    "@types/jest": "^26.0.24",
+    "@types/node": "^14.18.2",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "eslint": "^7.32.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
-    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-import": "^2.25.3",
     "jest": "^26.6.3",
-    "jest-junit": "^12.0.0",
-    "nock": "^13.0.11",
-    "ts-jest": "^26.5.4",
+    "jest-junit": "^12.3.0",
+    "nock": "^13.2.1",
+    "ts-jest": "^26.5.6",
     "ts-node": "^9",
-    "typescript": "^4.2.3"
+    "typescript": "^4.5.4"
   },
   "engines": {
     "node": ">=10.0.0"
