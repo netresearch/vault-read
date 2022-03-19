@@ -11,7 +11,7 @@
     "@oclif/command": "^1.8.16",
     "@oclif/config": "^1.18.3",
     "@oclif/parser": "^3.8.6",
-    "@oclif/plugin-help": "^3.2.7",
+    "@oclif/plugin-help": "^5.1.11",
     "node-vault": "netresearch/node-vault#master",
     "tslib": "^2.3.1"
   },
