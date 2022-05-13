@@ -13,7 +13,7 @@
     "@oclif/parser": "^3.8.6",
     "@oclif/plugin-help": "^5.1.11",
     "node-vault": "netresearch/node-vault#master",
-    "tslib": "^2.3.1"
+    "tslib": "^2.4.0"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.26.10",
