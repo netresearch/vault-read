@@ -1,5 +1,4 @@
-import Command, { flags as Flag } from '@oclif/command';
-import { args as Argument } from '@oclif/parser/lib';
+import { Command, Flags } from '@oclif/core';
 import * as NodeVault from 'node-vault';
 
 class VaultRead extends Command {
@@ -7,20 +6,20 @@ class VaultRead extends Command {
 
   static flags = {
     // add --version flag to show CLI version
-    version: Flag.version({ char: 'v' }),
-    help: Flag.help({ char: 'h' }),
-    username: Flag.string(
+    version: Flags.version({ char: 'v' }),
+    help: Flags.help({ char: 'h' }),
+    username: Flags.string(
       { char: 'u', description: 'The LDAP username for Vault, alternatively provide CI_VAULT_USER env variable' },
     ),
-    password: Flag.string(
+    password: Flags.string(
       { char: 'p', description: 'The LDAP password for Vault, alternatively provide CI_VAULT_PASSWORD env variable' },
     ),
-    address: Flag.string(
+    address: Flags.string(
       { char: 'a', description: 'The Vault url, alternatively provide CI_VAULT_ADDRESS env variable' },
     ),
   };
 
-  static args: Argument.IArg[] = [
+  static args = [
     {
       name: 'path',
       description: 'Path from which to read the secret',
@@ -34,7 +33,7 @@ class VaultRead extends Command {
   ];
 
   async run(): Promise<void> {
-    const { args, flags } = this.parse(VaultRead);
+    const { args, flags } = await this.parse(VaultRead);
     const username = flags.username || process.env.CI_VAULT_USER as string || false;
     const password = flags.password || process.env.CI_VAULT_PASSWORD as string || false;
     const address = flags.address || process.env.CI_VAULT_ADDRESS as string || false;
