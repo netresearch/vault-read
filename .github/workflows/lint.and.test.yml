@@ -11,12 +11,12 @@ on:
 jobs:
   build:
     name: 🔨 Build
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: "12.x"
+          node-version: "18.x"
 
       - name: ⚡ Install dependencies
         run: yarn install --frozen-lockfile
@@ -26,12 +26,12 @@ jobs:
 
   lint:
     name: 🔎 Lint
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: "12.x"
+          node-version: "18.x"
 
       - name: ⚡ Install dependencies
         run: yarn install --frozen-lockfile
@@ -41,12 +41,12 @@ jobs:
 
   test:
     name: ⚠️ Test
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: "12.x"
+          node-version: "18.x"
 
       - name: ⚡ Install dependencies
         run: yarn install --frozen-lockfile
