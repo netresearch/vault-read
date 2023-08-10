@@ -9,7 +9,7 @@
   "bugs": "https://github.com/netresearch/vault-read/issues",
   "dependencies": {
     "@oclif/core": "^1.21.0",
-    "node-vault": "netresearch/node-vault#master",
+    "node-vault": "0.10.0",
     "tslib": "^2.4.1"
   },
   "devDependencies": {
