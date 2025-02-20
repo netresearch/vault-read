@@ -22,10 +22,6 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           scope: "@netresearch"
 
-      - name: Configure npm for publishing
-        run: |
-          echo "//registry.npmjs.org/:_authToken=\${NETRESEARCH_NPM_PUBLISH_TOKEN}" > .npmrc
-
       - name: ⚡ Install dependencies
         run: yarn install --frozen-lockfile
 
