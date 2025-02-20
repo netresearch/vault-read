@@ -15,11 +15,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v1
+      - name: Setup for publishing to registry.npmjs.org
+        uses: actions/setup-node@v4
         with:
-          node-version: "18.x"
+          node-version: "22.x"
           registry-url: "https://registry.npmjs.org"
           scope: "@netresearch"
+
+      - name: Configure npm for publishing
+        run: |
+          echo "//registry.npmjs.org/:_authToken=\${NETRESEARCH_NPM_PUBLISH_TOKEN}" > .npmrc
 
       - name: ⚡ Install dependencies
         run: yarn install --frozen-lockfile
@@ -32,9 +37,10 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NETRESEARCH_NPM_PUBLISH_TOKEN }}
 
-      - uses: actions/setup-node@v1
+      - name: Setup for publishing to npm.pkg.github.com
+        uses: actions/setup-node@v4
         with:
-          node-version: "18.x"
+          node-version: "22.x"
           registry-url: "https://npm.pkg.github.com"
           scope: "@netresearch"
 
