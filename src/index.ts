@@ -34,18 +34,18 @@ class VaultRead extends Command {
 
   async run(): Promise<void> {
     const { args, flags } = await this.parse(VaultRead);
-    const username = flags.username || process.env.CI_VAULT_USER as string || false;
-    const password = flags.password || process.env.CI_VAULT_PASSWORD as string || false;
-    const address = flags.address || process.env.CI_VAULT_ADDRESS as string || false;
+    const username = flags.username || process.env.CI_VAULT_USER || '';
+    const password = flags.password || process.env.CI_VAULT_PASSWORD || '';
+    const address = flags.address || process.env.CI_VAULT_ADDRESS || '';
 
-    if (!address) {
+    if (!address || address.trim() === '') {
       this.error(
         'No vault address provided as flag or via CI_VAULT_ADDRESS environment variable.',
         { exit: 1 },
       );
     }
 
-    if (!username || !password) {
+    if (!username || username.trim() === '' || !password || password.trim() === '') {
       this.error(
         'Please provide username and password either as flags or via CI_VAULT_USER and CI_VAULT_PASSWORD environment variables.',
         { exit: 1 },
@@ -53,7 +53,7 @@ class VaultRead extends Command {
     }
 
     const vault = NodeVault({
-      endpoint: address as string,
+      endpoint: address,
     });
 
     try {
@@ -63,7 +63,8 @@ class VaultRead extends Command {
         VaultRead.parseSecret(response, args.key),
       );
     } catch (err) {
-      this.error((err as Error), { exit: 1 });
+      const sanitizedError = VaultRead.sanitizeError(err as Error);
+      this.error(sanitizedError, { exit: 1 });
     }
   }
 
@@ -76,6 +77,41 @@ class VaultRead extends Command {
     } else {
       return (response.data[key] as string);
     }
+  }
+
+  private static sanitizeError(error: Error): string {
+    const { message } = error;
+
+    const sensitivePatterns = [
+      /token["\s]*[:=]["\s]*[a-zA-Z0-9_-]+/gi,
+      /password["\s]*[:=]["\s]*[^\s"]+/gi,
+      /secret["\s]*[:=]["\s]*[^\s"]+/gi,
+      /key["\s]*[:=]["\s]*[^\s"]+/gi,
+      /auth["\s]*[:=]["\s]*[^\s"]+/gi,
+    ];
+
+    let sanitized = message;
+
+    sensitivePatterns.forEach((pattern) => {
+      sanitized = sanitized.replace(pattern, (match) => {
+        const parts = match.split(/[:=]/);
+        return parts.length > 1 ? `${parts[0]}=[REDACTED]` : '[REDACTED]';
+      });
+    });
+
+    if (message.includes('401') && message.includes('Unauthorized')) {
+      return '401 (Unauthorized) - Invalid credentials provided';
+    }
+
+    if (message.includes('403') && message.includes('Forbidden')) {
+      return '403 (Forbidden) - Access denied to the requested resource';
+    }
+
+    if (message.includes('404') && message.includes('Not Found')) {
+      return '404 (Not Found) - The requested path does not exist';
+    }
+
+    return sanitized;
   }
 }
 

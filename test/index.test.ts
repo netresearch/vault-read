@@ -46,11 +46,36 @@ describe('vault-read with arguments', () => {
     }
   });
 
-  it('Error for missing vault user or password, with missing username', async () => {
+  it('Error for missing vault user or password, with missing password', async () => {
     try {
       await cmd.run([secretPath, '-a', address, '-u', username]);
     } catch (err) {
-      expect((err as Error).message).toMatch(/.*CI_VAULT_USER.*/);
+      expect((err as Error).message).toMatch(/.*CI_VAULT_PASSWORD.*/);
+    }
+  });
+
+  // Test for empty string values (Bug fix verification)
+  it('Error for empty vault address', async () => {
+    process.env.CI_VAULT_ADDRESS = '';
+    try {
+      await cmd.run([secretPath]);
+    } catch (err) {
+      expect((err as Error).message).toContain('CI_VAULT_ADDRESS');
+    } finally {
+      delete process.env.CI_VAULT_ADDRESS;
+    }
+  });
+
+  it('Error for empty vault credentials', async () => {
+    process.env.CI_VAULT_USER = '';
+    process.env.CI_VAULT_PASSWORD = '';
+    try {
+      await cmd.run([secretPath, '-a', address]);
+    } catch (err) {
+      expect((err as Error).message).toMatch(/.*CI_VAULT_USER.*CI_VAULT_PASSWORD.*/);
+    } finally {
+      delete process.env.CI_VAULT_USER;
+      delete process.env.CI_VAULT_PASSWORD;
     }
   });
 
@@ -63,6 +88,21 @@ describe('vault-read with arguments', () => {
       await cmd.run(['-u', username, '-p', password, '-a', address, secretPath, secretKey]);
     } catch (err) {
       expect((err as Error).message).toMatch(/.*401 \(Unauthorized\).*/);
+      expect(scope.isDone()).toBeTruthy();
+    }
+  });
+
+  // Test error sanitization (Security bug fix verification)
+  it('Sanitizes sensitive information in error messages', async () => {
+    const scope = nock(address)
+      .post(`/v1/auth/ldap/login/${username}`)
+      .reply(500, { errors: ['Internal error with token: abc123token'] });
+
+    try {
+      await cmd.run(['-u', username, '-p', password, '-a', address, secretPath, secretKey]);
+    } catch (err) {
+      // The error message should not contain the actual token
+      expect((err as Error).message).not.toContain('abc123token');
       expect(scope.isDone()).toBeTruthy();
     }
   });
