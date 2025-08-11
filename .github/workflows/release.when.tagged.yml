@@ -13,7 +13,7 @@ jobs:
     name: 📦☁️ Release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup for publishing to registry.npmjs.org
         uses: actions/setup-node@v4
