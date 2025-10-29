@@ -18,7 +18,7 @@ jobs:
       - name: Setup for publishing to registry.npmjs.org
         uses: actions/setup-node@v6
         with:
-          node-version: "22.x"
+          node-version: "24.x"
           registry-url: "https://registry.npmjs.org"
           scope: "@netresearch"
 
@@ -36,7 +36,7 @@ jobs:
       - name: Setup for publishing to npm.pkg.github.com
         uses: actions/setup-node@v6
         with:
-          node-version: "22.x"
+          node-version: "24.x"
           registry-url: "https://npm.pkg.github.com"
           scope: "@netresearch"
 
