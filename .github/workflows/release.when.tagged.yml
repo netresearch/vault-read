@@ -23,7 +23,7 @@ jobs:
           scope: "@netresearch"
 
       - name: ⚡ Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile --ignore-engines
 
       - name: 🔨 Build
         run: yarn build:lib
