@@ -66,7 +66,7 @@ class VaultRead extends Command {
   }
 
   private static parseSecret(response: { data: { [p: string]: string } }, key: string | undefined): string {
-    if (!key || key === '') {
+    if (!key) {
       return JSON.stringify(response.data);
     }
     if (!response.data[key]) {
