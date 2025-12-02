@@ -75,11 +75,7 @@ describe('vault-read with arguments', () => {
       .get(`/v1/${secretPath}`)
       .reply(200, { data: { secretKey: 'result' } });
 
-    try {
-      await cmd.run(['-u', username, '-p', password, '-a', address, secretPath, secretKey]);
-    } catch (err) {
-      fail(err);
-    }
+    await cmd.run(['-u', username, '-p', password, '-a', address, secretPath, secretKey]);
 
     expect(scope.isDone()).toBeTruthy();
     expect(stdOut).toHaveLength(1);
@@ -111,11 +107,7 @@ describe('vault-read with arguments', () => {
       .get(`/v1/${secretPath}`)
       .reply(200, { data: { secretKey: 'result' } });
 
-    try {
-      await cmd.run(['-u', username, '-p', password, '-a', address, secretPath]);
-    } catch (err) {
-      fail(err);
-    }
+    await cmd.run(['-u', username, '-p', password, '-a', address, secretPath]);
 
     expect(scope.isDone()).toBeTruthy();
     expect(stdOut).toHaveLength(1);

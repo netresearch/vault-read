@@ -1,4 +1,4 @@
-import { Command, Flags } from '@oclif/core';
+import { Command, Flags, Args } from '@oclif/core';
 import * as NodeVault from 'node-vault';
 
 class VaultRead extends Command {
@@ -19,18 +19,16 @@ class VaultRead extends Command {
     ),
   };
 
-  static args = [
-    {
-      name: 'path',
+  static args = {
+    path: Args.string({
       description: 'Path from which to read the secret',
       required: true,
-    },
-    {
-      name: 'key',
+    }),
+    key: Args.string({
       description: 'Specific key from the data store in the path',
       default: '',
-    },
-  ];
+    }),
+  };
 
   async run(): Promise<void> {
     const { args, flags } = await this.parse(VaultRead);
@@ -67,8 +65,8 @@ class VaultRead extends Command {
     }
   }
 
-  private static parseSecret(response: { data: { [p: string]: string } }, key: string): string {
-    if (key === '') {
+  private static parseSecret(response: { data: { [p: string]: string } }, key: string | undefined): string {
+    if (!key || key === '') {
       return JSON.stringify(response.data);
     }
     if (!response.data[key]) {
