@@ -8,6 +8,8 @@
     "strict": true,
     "target": "es2017",
     "noImplicitAny": false,
+    // Skip type checking of declaration files to work around type issues in node-vault dependencies
+    // TODO: Remove this when node-vault or its dependencies have correct type definitions
     "skipLibCheck": true
   },
   "include": [
