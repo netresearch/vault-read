@@ -59,7 +59,7 @@
   },
   "types": "lib/index.d.ts",
   "resolutions": {
-    "got": "11.8.6"
+    "got": "14.6.5"
   }
 }
 
