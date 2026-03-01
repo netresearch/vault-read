@@ -13,20 +13,17 @@
     "tslib": "^2.8.1"
   },
   "devDependencies": {
-    "@types/jest": "^30.0.0",
     "@types/node": "^24.10.1",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
-    "eslint": "^10.0.0",
+    "eslint": "^8.57.0",
     "eslint-config-airbnb-typescript": "^18.0.0",
     "eslint-plugin-import": "^2.31.0",
-    "jest": "^30.0.0",
-    "jest-junit": "^16.0.0",
     "nock": "^14.0.10",
-    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "tslib": "^2.8.1",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "vitest": "^4.0.18"
   },
   "engines": {
     "node": ">=20.0.0"
@@ -53,7 +50,8 @@
   },
   "repository": "netresearch/vault-read",
   "scripts": {
-    "test": "jest",
+    "postinstall": "sh scripts/postinstall.sh",
+    "test": "vitest run",
     "lint": "eslint . --ext .ts,.tsx",
     "build:lib": "tsc"
   },

@@ -7,3 +7,4 @@ bin
 # don't lint coverage output
 coverage
 jest.config.js
+vitest.config.ts

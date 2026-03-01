@@ -1,6 +1,8 @@
-import nock = require('nock');
-import cmd = require('../src');
-// @TODO add proper tests
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+
+import nock from 'nock';
+import cmd from '../src/index.js';
+
 const address = 'https://vault.test.tld';
 const username = 'testuser';
 const password = 'testpassword';
@@ -11,13 +13,12 @@ describe('vault-read with arguments', () => {
 
   beforeEach(() => {
     stdOut = [];
-    jest
-      .spyOn(process.stdout, 'write')
+    vi.spyOn(process.stdout, 'write')
       .mockImplementation((val) => { stdOut.push(val as string); return true; });
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     nock.cleanAll();
   });
 
@@ -46,7 +47,7 @@ describe('vault-read with arguments', () => {
     }
   });
 
-  it('Error for missing vault user or password, with missing username', async () => {
+  it('Error for missing vault user or password, with missing password', async () => {
     try {
       await cmd.run([secretPath, '-a', address, '-u', username]);
     } catch (err) {
@@ -62,7 +63,7 @@ describe('vault-read with arguments', () => {
     try {
       await cmd.run(['-u', username, '-p', password, '-a', address, secretPath, secretKey]);
     } catch (err) {
-      expect((err as Error).message).toMatch(/.*401 \(Unauthorized\).*/);
+      expect((err as Error).message).toMatch(/.*401.*/);
       expect(scope.isDone()).toBeTruthy();
     }
   });

@@ -1,5 +1,5 @@
 import { Command, Flags, Args } from '@oclif/core';
-import * as NodeVault from 'node-vault';
+import NodeVault from 'node-vault';
 
 class VaultRead extends Command {
   static description = 'Read secrets from the vault';
@@ -77,4 +77,4 @@ class VaultRead extends Command {
   }
 }
 
-export = VaultRead;
+export default VaultRead;
