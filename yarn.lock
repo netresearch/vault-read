@@ -2265,7 +2265,7 @@ nock@^14.0.10:
     json-stringify-safe "^5.0.1"
     propagate "^2.0.0"
 
-"node-vault@https://github.com/netresearch/node-vault.git#master":
+"node-vault@https://github.com/netresearch/node-vault.git#689f0e529f6a43644f1fe9c38cde5a494741a242":
   version "0.9.22"
   resolved "https://github.com/netresearch/node-vault.git#689f0e529f6a43644f1fe9c38cde5a494741a242"
   dependencies:
