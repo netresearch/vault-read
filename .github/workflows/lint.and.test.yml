@@ -3,9 +3,9 @@ name: 🔎 Lint
 on:
   workflow_dispatch:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
     types: [opened, synchronize]
 
 permissions:
